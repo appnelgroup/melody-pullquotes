@@ -8,13 +8,14 @@ sub add_pull_quote_field {
     my ( $eh, $app, $param, $tmpl ) = @_;
     return unless $tmpl->isa('MT::Template');
     my $q = $app->can('query') ? $app->query : $app->param;
+    my $model = $app->mode('view_page') ? 'page' : 'entry'; # will this work?
     my $pull_quote = '';
-    if ( my $entry_id = $q->param('id') ) {
+    if ( my $id = $q->param('id') ) {
         require MT::Util;
-        my $entry
-          = $app->model('entry')->load( $entry_id, { cached_ok => 1 } );
-        $pull_quote = MT::Util::encode_html( $entry->pull_quote )
-          if $entry && $entry->pull_quote;
+        my $obj
+          = $app->model($model)->load( $id, { cached_ok => 1 } );
+        $pull_quote = MT::Util::encode_html( $obj->pull_quote )
+          if $obj && $obj->pull_quote;
     }
     my $innerHTML
       = qq{ <textarea name="pull_quote" id="pull_quote" class="full-width short" cols="" rows="" mt:watch-change="1">$pull_quote</textarea> };
@@ -34,7 +35,6 @@ sub save_pull_quote {
     my $q = $app->can('query') ? $app->query : $app->param;
     my $pq = $q->param('pull_quote') || '';
     $obj->pull_quote($pq);
-    return $obj->save or $cb->error( $obj->errstr );    # right thing?
 }
 
 #--- template tag handlers
