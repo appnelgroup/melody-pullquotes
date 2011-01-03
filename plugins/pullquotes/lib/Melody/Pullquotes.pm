@@ -8,12 +8,11 @@ sub add_pull_quote_field {
     my ( $eh, $app, $param, $tmpl ) = @_;
     return unless $tmpl->isa('MT::Template');
     my $q = $app->can('query') ? $app->query : $app->param;
-    my $model = $app->mode('view_page') ? 'page' : 'entry'; # will this work?
+    my $model = $app->mode('view_page') ? 'page' : 'entry';  # will this work?
     my $pull_quote = '';
     if ( my $id = $q->param('id') ) {
         require MT::Util;
-        my $obj
-          = $app->model($model)->load( $id, { cached_ok => 1 } );
+        my $obj = $app->model($model)->load( $id, { cached_ok => 1 } );
         $pull_quote = MT::Util::encode_html( $obj->pull_quote )
           if $obj && $obj->pull_quote;
     }
