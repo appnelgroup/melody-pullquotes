@@ -1,5 +1,6 @@
 name: Pull Quotes
-id: PullQuotes
+id: pullquotes
+key: PullQuotes
 author_link: http://appnel.com/
 author_name: The Appnel Group
 description: 'Enables a pull quote for entries that is seperate from the abstract.'

@@ -8,9 +8,7 @@ sub add_pull_quote_field {
     my ( $eh, $app, $param, $tmpl ) = @_;
     return unless $tmpl->isa('MT::Template');
     my $q = $app->can('query') ? $app->query : $app->param;
-
-    # my $model = $app->mode('view_page') ? 'page' : 'entry';  # will this work?
-    my $model      = 'entry';
+    my $model      = 'entry';    # placeholder for entry/page conditional
     my $pull_quote = '';
     if ( my $id = $q->param('id') ) {
         require MT::Util;
@@ -46,6 +44,7 @@ sub save_pull_quote {
     my $q = $app->can('query') ? $app->query : $app->param;
     my $pq = $q->param('pull_quote') || '';
     $obj->pull_quote($pq);
+    return 1;
 }
 
 #--- template tag handlers
