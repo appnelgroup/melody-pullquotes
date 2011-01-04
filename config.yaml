@@ -2,19 +2,19 @@ name: Pull Quotes
 id: PullQuotes
 author_link: http://appnel.com/
 author_name: The Appnel Group
-description: Enables a seperate pull quote for entries and pages.
+description: 'Enables a pull quote for entries that is seperate from the abstract.'
 version: 0.1
 schema_version: 1
 object_types:
     entry:
-        pull_quote: text
+        pull_quote: meta
     page:
-        pull_quote: text
+        pull_quote: meta
 callbacks:
     MT::App::CMS::template_param.edit_entry: $PullQuotes::Melody::PullQuotes::add_pull_quote_field
     MT::App::CMS::cms_pre_save.entry: $PullQuotes::Melody::PullQuotes::save_pull_quote
-    MT::App::CMS::template_param.edit_page: $PullQuotes::Melody::PullQuotes::add_pull_quote_field
-    MT::App::CMS::cms_pre_save.page: $PullQuotes::Melody::PullQuotes::save_pull_quote
+    # MT::App::CMS::template_param.edit_page: $PullQuotes::Melody::PullQuotes::add_pull_quote_field
+    # MT::App::CMS::cms_pre_save.page: $PullQuotes::Melody::PullQuotes::save_pull_quote
 tags:
-    block:
-        EntryPageQuote: $PullQuotes::Melody::PullQuotes::pull_quote
+    function:
+        EntryPullQuote: $PullQuotes::Melody::PullQuotes::pull_quote
